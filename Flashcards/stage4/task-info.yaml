@@ -1,0 +1,6 @@
+type: edu
+files:
+- name: src/flashcards/Main.java
+  visible: true
+- name: test/FlashcardsTests.java
+  visible: false
