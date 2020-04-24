@@ -23,7 +23,7 @@ public class FlashcardsTests extends StageTest<String> {
                             String output = main.execute("black").toLowerCase();
                             expect(output).toContainAtLeast(1).words();
                             if (!(output.contains("\"black\""))) {
-                                return CheckResult.wrong("Expected a warning that the object already exists");
+                                return CheckResult.wrong("Expected a warning that the term already exists");
                             }
                             main.execute("red");
                             String output1 = main.execute("white");
@@ -36,11 +36,12 @@ public class FlashcardsTests extends StageTest<String> {
                             if (!(output2.contains("\"black\""))) return CheckResult.wrong("The game was not started");
 
                             String output3 = main.execute("white");
-                            if (!(output3.contains("\"red\""))) return CheckResult.wrong("Wrong definition was expected");
+                            if (!(output3.contains("\"red\"")))
+                                return CheckResult.wrong("Wrong definition is expected");
 
                             main.execute("green");
                             if (!(main.isFinished())) {
-                                return CheckResult.wrong("Wrong definition was expected");
+                                return CheckResult.wrong("Wrong definition is expected");
                             }
                             return CheckResult.correct();
                         }),
@@ -59,13 +60,17 @@ public class FlashcardsTests extends StageTest<String> {
                             }
                             String output1 = main.execute("ankle");
                             expect(output1).toContainAtLeast(1).words();
-                            if (!(output1.contains("\"uncle\"") &&
-                                    output1.contains("\"a part of the body where the foot and the leg meet\""))) {
-                                return CheckResult.wrong("Wrong definition was accepted");
+                            output1 = output1.split("\n")[0];
+                            if (!(output1.contains("\"uncle\""))) {
+                                return CheckResult.wrong("Wrong definition is accepted");
+                            } else if (!(output1.contains("\"a part of the body where the foot and the leg meet\""))) {
+                                return CheckResult.wrong("The original term was not printed");
                             }
                             String output2 = main.execute("???");
                             expect(output2).toContainAtLeast(1).words();
-                            if (!(output2.contains("\"ankle\""))) return CheckResult.wrong("Wrong definition was accepted");
+                            if (!(output2.contains("\"ankle\""))) {
+                                return CheckResult.wrong("Wrong definition was accepted");
+                            }
                             if (!(main.isFinished())) {
                                 return CheckResult.wrong("The program was not stopped");
                             }
